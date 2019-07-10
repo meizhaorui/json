@@ -1,12 +1,12 @@
 /*
     __ _____ _____ _____
  __|  |   __|     |   | |  JSON for Modern C++ (test suite)
-|  |  |__   |  |  | | | |  version 3.2.0
+|  |  |__   |  |  | | | |  version 3.6.1
 |_____|_____|_____|_|___|  https://github.com/nlohmann/json
 
 Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 SPDX-License-Identifier: MIT
-Copyright (c) 2013-2018 Niels Lohmann <http://nlohmann.me>.
+Copyright (c) 2013-2019 Niels Lohmann <http://nlohmann.me>.
 
 Permission is hereby  granted, free of charge, to any  person obtaining a copy
 of this software and associated  documentation files (the "Software"), to deal
@@ -27,13 +27,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE  OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include "catch.hpp"
+#include "doctest_compatibility.h"
 
 #include <nlohmann/json.hpp>
 using nlohmann::json;
 
 #include <fstream>
+#include <sstream>
+#include <iomanip>
+#include <set>
 
+namespace
+{
 class SaxCountdown
 {
   public:
@@ -103,6 +108,7 @@ class SaxCountdown
   private:
     int events_left = 0;
 };
+}
 
 TEST_CASE("MessagePack")
 {
@@ -163,7 +169,7 @@ TEST_CASE("MessagePack")
                 {
                     for (auto i = -32; i <= -1; ++i)
                     {
-                        CAPTURE(i);
+                        CAPTURE(i)
 
                         // create JSON value with integer number
                         json j = i;
@@ -193,7 +199,7 @@ TEST_CASE("MessagePack")
                 {
                     for (size_t i = 0; i <= 127; ++i)
                     {
-                        CAPTURE(i);
+                        CAPTURE(i)
 
                         // create JSON value with integer number
                         json j = -1;
@@ -224,7 +230,7 @@ TEST_CASE("MessagePack")
                 {
                     for (size_t i = 128; i <= 255; ++i)
                     {
-                        CAPTURE(i);
+                        CAPTURE(i)
 
                         // create JSON value with integer number
                         json j = -1;
@@ -258,7 +264,7 @@ TEST_CASE("MessagePack")
                 {
                     for (size_t i = 256; i <= 65535; ++i)
                     {
-                        CAPTURE(i);
+                        CAPTURE(i)
 
                         // create JSON value with integer number
                         json j = -1;
@@ -296,7 +302,7 @@ TEST_CASE("MessagePack")
                                 65536u, 77777u, 1048576u, 4294967295u
                             })
                     {
-                        CAPTURE(i);
+                        CAPTURE(i)
 
                         // create JSON value with integer number
                         json j = -1;
@@ -339,7 +345,7 @@ TEST_CASE("MessagePack")
                                 4294967296lu, 9223372036854775807lu
                             })
                     {
-                        CAPTURE(i);
+                        CAPTURE(i)
 
                         // create JSON value with integer number
                         json j = -1;
@@ -387,7 +393,7 @@ TEST_CASE("MessagePack")
                 {
                     for (auto i = -128; i <= -33; ++i)
                     {
-                        CAPTURE(i);
+                        CAPTURE(i)
 
                         // create JSON value with integer number
                         json j = i;
@@ -435,7 +441,7 @@ TEST_CASE("MessagePack")
                 {
                     for (int16_t i = -32768; i <= -129; ++i)
                     {
-                        CAPTURE(i);
+                        CAPTURE(i)
 
                         // create JSON value with integer number
                         json j = i;
@@ -475,7 +481,7 @@ TEST_CASE("MessagePack")
                     numbers.push_back(-2147483648ll);
                     for (auto i : numbers)
                     {
-                        CAPTURE(i);
+                        CAPTURE(i)
 
                         // create JSON value with integer number
                         json j = i;
@@ -517,7 +523,7 @@ TEST_CASE("MessagePack")
                     numbers.push_back(-2147483649ll);
                     for (auto i : numbers)
                     {
-                        CAPTURE(i);
+                        CAPTURE(i)
 
                         // create JSON value with unsigned integer number
                         json j = i;
@@ -567,7 +573,7 @@ TEST_CASE("MessagePack")
                 {
                     for (size_t i = 0; i <= 127; ++i)
                     {
-                        CAPTURE(i);
+                        CAPTURE(i)
 
                         // create JSON value with unsigned integer number
                         json j = i;
@@ -597,7 +603,7 @@ TEST_CASE("MessagePack")
                 {
                     for (size_t i = 128; i <= 255; ++i)
                     {
-                        CAPTURE(i);
+                        CAPTURE(i)
 
                         // create JSON value with unsigned integer number
                         json j = i;
@@ -630,7 +636,7 @@ TEST_CASE("MessagePack")
                 {
                     for (size_t i = 256; i <= 65535; ++i)
                     {
-                        CAPTURE(i);
+                        CAPTURE(i)
 
                         // create JSON value with unsigned integer number
                         json j = i;
@@ -667,7 +673,7 @@ TEST_CASE("MessagePack")
                                 65536u, 77777u, 1048576u, 4294967295u
                             })
                     {
-                        CAPTURE(i);
+                        CAPTURE(i)
 
                         // create JSON value with unsigned integer number
                         json j = i;
@@ -709,7 +715,7 @@ TEST_CASE("MessagePack")
                                 4294967296lu, 18446744073709551615lu
                             })
                     {
-                        CAPTURE(i);
+                        CAPTURE(i)
 
                         // create JSON value with unsigned integer number
                         json j = i;
@@ -789,7 +795,7 @@ TEST_CASE("MessagePack")
 
                 for (size_t N = 0; N < first_bytes.size(); ++N)
                 {
-                    CAPTURE(N);
+                    CAPTURE(N)
 
                     // create JSON value with string containing of N * 'x'
                     const auto s = std::string(N, 'x');
@@ -826,7 +832,7 @@ TEST_CASE("MessagePack")
             {
                 for (size_t N = 32; N <= 255; ++N)
                 {
-                    CAPTURE(N);
+                    CAPTURE(N)
 
                     // create JSON value with string containing of N * 'x'
                     const auto s = std::string(N, 'x');
@@ -861,7 +867,7 @@ TEST_CASE("MessagePack")
                             256u, 999u, 1025u, 3333u, 2048u, 65535u
                         })
                 {
-                    CAPTURE(N);
+                    CAPTURE(N)
 
                     // create JSON value with string containing of N * 'x'
                     const auto s = std::string(N, 'x');
@@ -894,7 +900,7 @@ TEST_CASE("MessagePack")
                             65536u, 77777u, 1048576u
                         })
                 {
-                    CAPTURE(N);
+                    CAPTURE(N)
 
                     // create JSON value with string containing of N * 'x'
                     const auto s = std::string(N, 'x');
@@ -1003,7 +1009,7 @@ TEST_CASE("MessagePack")
                 CHECK(result.size() == expected.size());
                 for (size_t i = 0; i < expected.size(); ++i)
                 {
-                    CAPTURE(i);
+                    CAPTURE(i)
                     CHECK(result[i] == expected[i]);
                 }
 
@@ -1124,7 +1130,7 @@ TEST_CASE("MessagePack")
         {
             CHECK_THROWS_AS(json::from_msgpack(std::vector<uint8_t>()), json::parse_error&);
             CHECK_THROWS_WITH(json::from_msgpack(std::vector<uint8_t>()),
-                              "[json.exception.parse_error.110] parse error at 1: unexpected end of input");
+                              "[json.exception.parse_error.110] parse error at byte 1: syntax error while parsing MessagePack value: unexpected end of input");
             CHECK(json::from_msgpack(std::vector<uint8_t>(), true, false).is_discarded());
         }
 
@@ -1151,43 +1157,43 @@ TEST_CASE("MessagePack")
             CHECK_THROWS_AS(json::from_msgpack(std::vector<uint8_t>({0x81, 0xa1, 0x61})), json::parse_error&);
 
             CHECK_THROWS_WITH(json::from_msgpack(std::vector<uint8_t>({0x87})),
-                              "[json.exception.parse_error.110] parse error at 2: unexpected end of input");
+                              "[json.exception.parse_error.110] parse error at byte 2: syntax error while parsing MessagePack string: unexpected end of input");
             CHECK_THROWS_WITH(json::from_msgpack(std::vector<uint8_t>({0xcc})),
-                              "[json.exception.parse_error.110] parse error at 2: unexpected end of input");
+                              "[json.exception.parse_error.110] parse error at byte 2: syntax error while parsing MessagePack number: unexpected end of input");
             CHECK_THROWS_WITH(json::from_msgpack(std::vector<uint8_t>({0xcd})),
-                              "[json.exception.parse_error.110] parse error at 2: unexpected end of input");
+                              "[json.exception.parse_error.110] parse error at byte 2: syntax error while parsing MessagePack number: unexpected end of input");
             CHECK_THROWS_WITH(json::from_msgpack(std::vector<uint8_t>({0xcd, 0x00})),
-                              "[json.exception.parse_error.110] parse error at 3: unexpected end of input");
+                              "[json.exception.parse_error.110] parse error at byte 3: syntax error while parsing MessagePack number: unexpected end of input");
             CHECK_THROWS_WITH(json::from_msgpack(std::vector<uint8_t>({0xce})),
-                              "[json.exception.parse_error.110] parse error at 2: unexpected end of input");
+                              "[json.exception.parse_error.110] parse error at byte 2: syntax error while parsing MessagePack number: unexpected end of input");
             CHECK_THROWS_WITH(json::from_msgpack(std::vector<uint8_t>({0xce, 0x00})),
-                              "[json.exception.parse_error.110] parse error at 3: unexpected end of input");
+                              "[json.exception.parse_error.110] parse error at byte 3: syntax error while parsing MessagePack number: unexpected end of input");
             CHECK_THROWS_WITH(json::from_msgpack(std::vector<uint8_t>({0xce, 0x00, 0x00})),
-                              "[json.exception.parse_error.110] parse error at 4: unexpected end of input");
+                              "[json.exception.parse_error.110] parse error at byte 4: syntax error while parsing MessagePack number: unexpected end of input");
             CHECK_THROWS_WITH(json::from_msgpack(std::vector<uint8_t>({0xce, 0x00, 0x00, 0x00})),
-                              "[json.exception.parse_error.110] parse error at 5: unexpected end of input");
+                              "[json.exception.parse_error.110] parse error at byte 5: syntax error while parsing MessagePack number: unexpected end of input");
             CHECK_THROWS_WITH(json::from_msgpack(std::vector<uint8_t>({0xcf})),
-                              "[json.exception.parse_error.110] parse error at 2: unexpected end of input");
+                              "[json.exception.parse_error.110] parse error at byte 2: syntax error while parsing MessagePack number: unexpected end of input");
             CHECK_THROWS_WITH(json::from_msgpack(std::vector<uint8_t>({0xcf, 0x00})),
-                              "[json.exception.parse_error.110] parse error at 3: unexpected end of input");
+                              "[json.exception.parse_error.110] parse error at byte 3: syntax error while parsing MessagePack number: unexpected end of input");
             CHECK_THROWS_WITH(json::from_msgpack(std::vector<uint8_t>({0xcf, 0x00, 0x00})),
-                              "[json.exception.parse_error.110] parse error at 4: unexpected end of input");
+                              "[json.exception.parse_error.110] parse error at byte 4: syntax error while parsing MessagePack number: unexpected end of input");
             CHECK_THROWS_WITH(json::from_msgpack(std::vector<uint8_t>({0xcf, 0x00, 0x00, 0x00})),
-                              "[json.exception.parse_error.110] parse error at 5: unexpected end of input");
+                              "[json.exception.parse_error.110] parse error at byte 5: syntax error while parsing MessagePack number: unexpected end of input");
             CHECK_THROWS_WITH(json::from_msgpack(std::vector<uint8_t>({0xcf, 0x00, 0x00, 0x00, 0x00})),
-                              "[json.exception.parse_error.110] parse error at 6: unexpected end of input");
+                              "[json.exception.parse_error.110] parse error at byte 6: syntax error while parsing MessagePack number: unexpected end of input");
             CHECK_THROWS_WITH(json::from_msgpack(std::vector<uint8_t>({0xcf, 0x00, 0x00, 0x00, 0x00, 0x00})),
-                              "[json.exception.parse_error.110] parse error at 7: unexpected end of input");
+                              "[json.exception.parse_error.110] parse error at byte 7: syntax error while parsing MessagePack number: unexpected end of input");
             CHECK_THROWS_WITH(json::from_msgpack(std::vector<uint8_t>({0xcf, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00})),
-                              "[json.exception.parse_error.110] parse error at 8: unexpected end of input");
+                              "[json.exception.parse_error.110] parse error at byte 8: syntax error while parsing MessagePack number: unexpected end of input");
             CHECK_THROWS_WITH(json::from_msgpack(std::vector<uint8_t>({0xcf, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00})),
-                              "[json.exception.parse_error.110] parse error at 9: unexpected end of input");
+                              "[json.exception.parse_error.110] parse error at byte 9: syntax error while parsing MessagePack number: unexpected end of input");
             CHECK_THROWS_WITH(json::from_msgpack(std::vector<uint8_t>({0xa5, 0x68, 0x65})),
-                              "[json.exception.parse_error.110] parse error at 4: unexpected end of input");
+                              "[json.exception.parse_error.110] parse error at byte 4: syntax error while parsing MessagePack string: unexpected end of input");
             CHECK_THROWS_WITH(json::from_msgpack(std::vector<uint8_t>({0x92, 0x01})),
-                              "[json.exception.parse_error.110] parse error at 3: unexpected end of input");
+                              "[json.exception.parse_error.110] parse error at byte 3: syntax error while parsing MessagePack value: unexpected end of input");
             CHECK_THROWS_WITH(json::from_msgpack(std::vector<uint8_t>({0x81, 0xa1, 0x61})),
-                              "[json.exception.parse_error.110] parse error at 4: unexpected end of input");
+                              "[json.exception.parse_error.110] parse error at byte 4: syntax error while parsing MessagePack value: unexpected end of input");
 
             CHECK(json::from_msgpack(std::vector<uint8_t>({0x87}), true, false).is_discarded());
             CHECK(json::from_msgpack(std::vector<uint8_t>({0xcc}), true, false).is_discarded());
@@ -1216,12 +1222,12 @@ TEST_CASE("MessagePack")
             {
                 CHECK_THROWS_AS(json::from_msgpack(std::vector<uint8_t>({0xc1})), json::parse_error&);
                 CHECK_THROWS_WITH(json::from_msgpack(std::vector<uint8_t>({0xc1})),
-                                  "[json.exception.parse_error.112] parse error at 1: error reading MessagePack; last byte: 0xC1");
+                                  "[json.exception.parse_error.112] parse error at byte 1: syntax error while parsing MessagePack value: invalid byte: 0xC1");
                 CHECK(json::from_msgpack(std::vector<uint8_t>({0xc6}), true, false).is_discarded());
 
                 CHECK_THROWS_AS(json::from_msgpack(std::vector<uint8_t>({0xc6})), json::parse_error&);
                 CHECK_THROWS_WITH(json::from_msgpack(std::vector<uint8_t>({0xc6})),
-                                  "[json.exception.parse_error.112] parse error at 1: error reading MessagePack; last byte: 0xC6");
+                                  "[json.exception.parse_error.112] parse error at byte 1: syntax error while parsing MessagePack value: invalid byte: 0xC6");
                 CHECK(json::from_msgpack(std::vector<uint8_t>({0xc6}), true, false).is_discarded());
             }
 
@@ -1249,7 +1255,7 @@ TEST_CASE("MessagePack")
         {
             CHECK_THROWS_AS(json::from_msgpack(std::vector<uint8_t>({0x81, 0xff, 0x01})), json::parse_error&);
             CHECK_THROWS_WITH(json::from_msgpack(std::vector<uint8_t>({0x81, 0xff, 0x01})),
-                              "[json.exception.parse_error.113] parse error at 2: expected a MessagePack string; last byte: 0xFF");
+                              "[json.exception.parse_error.113] parse error at byte 2: syntax error while parsing MessagePack string: expected length specification (0xA0-0xBF, 0xD9-0xDB); last byte: 0xFF");
             CHECK(json::from_msgpack(std::vector<uint8_t>({0x81, 0xff, 0x01}), true, false).is_discarded());
         }
 
@@ -1266,7 +1272,7 @@ TEST_CASE("MessagePack")
             {
                 CHECK_THROWS_AS(json::from_msgpack(vec), json::parse_error&);
                 CHECK_THROWS_WITH(json::from_msgpack(vec),
-                                  "[json.exception.parse_error.110] parse error at 2: expected end of input");
+                                  "[json.exception.parse_error.110] parse error at byte 2: syntax error while parsing MessagePack value: expected end of input; last byte: 0xC0");
                 CHECK(json::from_msgpack(vec, true, false).is_discarded());
             }
         }
@@ -1296,7 +1302,6 @@ TEST_CASE("MessagePack")
         }
     }
 }
-
 
 // use this testcase outside [hide] to run it with Valgrind
 TEST_CASE("single MessagePack roundtrip")
@@ -1344,8 +1349,7 @@ TEST_CASE("single MessagePack roundtrip")
     }
 }
 
-
-TEST_CASE("MessagePack roundtrips", "[hide]")
+TEST_CASE("MessagePack roundtrips" * doctest::skip())
 {
     SECTION("input from msgpack-python")
     {
@@ -1517,10 +1521,10 @@ TEST_CASE("MessagePack roundtrips", "[hide]")
                     "test/data/nst_json_testsuite/test_parsing/y_structure_whitespace_array.json"
                 })
         {
-            CAPTURE(filename);
+            CAPTURE(filename)
 
-            SECTION(filename + ": std::vector<uint8_t>")
             {
+                INFO_WITH_TEMP(filename + ": std::vector<uint8_t>");
                 // parse JSON file
                 std::ifstream f_json(filename);
                 json j1 = json::parse(f_json);
@@ -1537,8 +1541,8 @@ TEST_CASE("MessagePack roundtrips", "[hide]")
                 CHECK(j1 == j2);
             }
 
-            SECTION(filename + ": std::ifstream")
             {
+                INFO_WITH_TEMP(filename + ": std::ifstream");
                 // parse JSON file
                 std::ifstream f_json(filename);
                 json j1 = json::parse(f_json);
@@ -1552,8 +1556,8 @@ TEST_CASE("MessagePack roundtrips", "[hide]")
                 CHECK(j1 == j2);
             }
 
-            SECTION(filename + ": uint8_t* and size")
             {
+                INFO_WITH_TEMP(filename + ": uint8_t* and size");
                 // parse JSON file
                 std::ifstream f_json(filename);
                 json j1 = json::parse(f_json);
@@ -1570,8 +1574,8 @@ TEST_CASE("MessagePack roundtrips", "[hide]")
                 CHECK(j1 == j2);
             }
 
-            SECTION(filename + ": output to output adapters")
             {
+                INFO_WITH_TEMP(filename + ": output to output adapters");
                 // parse JSON file
                 std::ifstream f_json(filename);
                 json j1 = json::parse(f_json);
@@ -1584,8 +1588,8 @@ TEST_CASE("MessagePack roundtrips", "[hide]")
 
                 if (!exclude_packed.count(filename))
                 {
-                    SECTION(filename + ": output adapters: std::vector<uint8_t>")
                     {
+                        INFO_WITH_TEMP(filename + ": output adapters: std::vector<uint8_t>");
                         std::vector<uint8_t> vec;
                         json::to_msgpack(j1, vec);
                         CHECK(vec == packed);
