@@ -156,7 +156,7 @@ If you are using the [Meson Build System](http://mesonbuild.com), then you can g
 
 If you are using [Conan](https://www.conan.io/) to manage your dependencies, merely add `jsonformoderncpp/x.y.z@vthiery/stable` to your `conanfile.py`'s requires, where `x.y.z` is the release version you want to use. Please file issues [here](https://github.com/vthiery/conan-jsonformoderncpp/issues) if you experience problems with the packages.
 
-If you are using [Spack](https://www.spack.io/) to manage your dependencies, you can use the `nlohmann_json` package. Please see the [spack project](https://github.com/spack/spack) for any issues regarding the packaging.
+If you are using [Spack](https://www.spack.io/) to manage your dependencies, you can use the [`nlohmann-json` package](https://spack.readthedocs.io/en/latest/package_list.html#nlohmann-json). Please see the [spack project](https://github.com/spack/spack) for any issues regarding the packaging.
 
 If you are using [hunter](https://github.com/ruslo/hunter/) on your project for external dependencies, then you can use the [nlohmann_json package](https://docs.hunter.sh/en/latest/packages/pkg/nlohmann_json.html). Please see the hunter project for any issues regarding the packaging.
 
@@ -171,6 +171,8 @@ If you are using [CocoaPods](https://cocoapods.org), you can use the library by 
 If you are using [NuGet](https://www.nuget.org), you can use the package [nlohmann.json](https://www.nuget.org/packages/nlohmann.json/). Please check [this extensive description](https://github.com/nlohmann/json/issues/1132#issuecomment-452250255) on how to use the package. Please files issues [here](https://github.com/hnkb/nlohmann-json-nuget/issues).
 
 If you are using [conda](https://conda.io/), you can use the package [nlohmann_json](https://github.com/conda-forge/nlohmann_json-feedstock) from [conda-forge](https://conda-forge.org) executing `conda install -c conda-forge nlohmann_json`. Please file issues [here](https://github.com/conda-forge/nlohmann_json-feedstock/issues).
+
+If you are using [MSYS2](http://www.msys2.org/), your can use the [mingw-w64-nlohmann_json](https://packages.msys2.org/base/mingw-w64-nlohmann_json) package, just type `pacman -S mingw-w64-i686-nlohmann_json` or `pacman -S mingw-w64-x86_64-nlohmann_json` for installation. Please file issues [here](https://github.com/msys2/MINGW-packages/issues/new?title=%5Bnlohmann_json%5D) if you experience problems with the packages.
 
 ## Examples
 
@@ -1076,6 +1078,8 @@ The class contains the UTF-8 Decoder from Bjoern Hoehrmann which is licensed und
 
 The class contains a slightly modified version of the Grisu2 algorithm from Florian Loitsch which is licensed under the [MIT License](http://opensource.org/licenses/MIT) (see above). Copyright &copy; 2009 [Florian Loitsch](http://florian.loitsch.com/)
 
+The class contains a copy of [Hedley](https://nemequ.github.io/hedley/) from Evan Nemerson which is licensed as [CC0-1.0](http://creativecommons.org/publicdomain/zero/1.0/).
+
 ## Contact
 
 If you have questions regarding the library, I would like to invite you to [open an issue at GitHub](https://github.com/nlohmann/json/issues/new/choose). Please describe your request, problem, or question as detailed as possible, and also mention the version of the library you are using as well as the version of your compiler and operating system. Opening an issue at GitHub allows other users and contributors to this library to collaborate. For instance, I have little experience with MSVC, and most issues in this regard have been solved by a growing community. If you have a look at the [closed issues](https://github.com/nlohmann/json/issues?q=is%3Aissue+is%3Aclosed), you will see that we react quite timely in most cases.
@@ -1259,6 +1263,12 @@ I deeply appreciate the help of the following people.
 - [Hani](https://github.com/hnkb) documented how to install the library with NuGet.
 - [Mark Beckwith](https://github.com/wythe) fixed a typo.
 - [yann-morin-1998](https://github.com/yann-morin-1998) helped reducing the CMake requirement to version 3.1.
+- [Konstantin Podsvirov](https://github.com/podsvirov) maintains a package for the MSYS2 software distro.
+- [remyabel](https://github.com/remyabel) added GNUInstallDirs to the CMake files.
+- [Taylor Howard](https://github.com/taylorhoward92) fixed a unit test.
+- [Gabe Ron](https://github.com/Macr0Nerd) implemented the `to_string` method.
+- [Watal M. Iwasaki](https://github.com/heavywatal) fixed a Clang warning.
+- [Viktor Kirilov](https://github.com/onqtam) switched the unit tests from [Catch](https://github.com/philsquared/Catch) to [doctest](https://github.com/onqtam/doctest)
 
 Thanks a lot for helping out! Please [let me know](mailto:mail@nlohmann.me) if I forgot someone.
 
@@ -1285,6 +1295,7 @@ The library itself consists of a single header file licensed under the MIT licen
 - [**git-update-ghpages**](https://github.com/rstacruz/git-update-ghpages) to upload the documentation to gh-pages
 - [**GitHub Changelog Generator**](https://github.com/skywinder/github-changelog-generator) to generate the [ChangeLog](https://github.com/nlohmann/json/blob/develop/ChangeLog.md)
 - [**Google Benchmark**](https://github.com/google/benchmark) to implement the benchmarks
+- [**Hedley**](https://nemequ.github.io/hedley/) to avoid re-inventing several compiler-agnostic feature macros
 - [**lcov**](http://ltp.sourceforge.net/coverage/lcov.php) to process coverage information and create a HTML view
 - [**libFuzzer**](http://llvm.org/docs/LibFuzzer.html) to implement fuzz testing for OSS-Fuzz
 - [**OSS-Fuzz**](https://github.com/google/oss-fuzz) for continuous fuzz testing of the library ([project repository](https://github.com/google/oss-fuzz/tree/master/projects/json))

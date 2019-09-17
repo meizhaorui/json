@@ -154,7 +154,10 @@ struct external_constructor<value_t::array>
         j.m_type = value_t::array;
         j.m_value = value_t::array;
         j.m_value.array->resize(arr.size());
-        std::copy(std::begin(arr), std::end(arr), j.m_value.array->begin());
+        if (arr.size() > 0)
+        {
+            std::copy(std::begin(arr), std::end(arr), j.m_value.array->begin());
+        }
         j.assert_invariant();
     }
 };
@@ -341,4 +344,4 @@ namespace
 {
 constexpr const auto& to_json = detail::static_const<detail::to_json_fn>::value;
 } // namespace
-}  // namespace nlohmann
+} // namespace nlohmann
